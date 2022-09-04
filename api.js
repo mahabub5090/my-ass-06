@@ -132,3 +132,45 @@ const showNewItems = newsAll => {
 
     loadingSpinner(false)
 };
+
+
+// modal 
+
+const loadNewsDetails = async news_id => {
+    const url = `https://openapi.programming-hero.com/api/news/${news_id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    displayNewsDetails(data.data[0]);
+}
+
+const displayNewsDetails = newsDetails => {
+    const modalTitle = document.getElementById('exampleModalToggleLabel');
+    modalTitle.innerText = newsDetails.title;
+
+    const modelDetails = document.getElementById('modal-main-body');
+    modelDetails.innerHTML = `
+    <div class="card" >
+    <img src="${newsDetails.thumbnail_url}" class="card-img-top" alt="...">
+    <div class="card-body">
+    <p class="card-text">${newsDetails.details}</p>
+    </div>
+    </div>
+    
+    <div class="my-4" >
+            <div class="d-flex justify-content-between row g-0">
+                <div class="col-md-2">
+                    <img src="${newsDetails.author.img ? newsDetails.author.img : 'The Author Image Is Not Founded'}" style="width: 50px; height: 50px;" class="rounded-circle" alt="...">
+                </div>
+                <div class="col-md-6">
+                    <h5 class="title">${newsDetails.author.name ? newsDetails.author.name : 'The Author Name Is Not Founded'}</h5>
+                    <p class="text">${newsDetails.author.published_date ? newsDetails.author.published_date : 'Author Publishing Date Is Not Founded'}</p>
+
+                </div>
+
+                <div class="col-md-4">
+                    <h5 class="title"><i class="fa-regular fa-eye"></i> ${newsDetails.total_view ? newsDetails.total_view : 'Total View Is Not Founded'}</h5>
+                </div>
+            </div>
+        </div>
+    `;
+}
