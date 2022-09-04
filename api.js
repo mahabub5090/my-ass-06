@@ -130,4 +130,5 @@ const showNewItems = newsAll => {
     })
 
 
-    loadingSpinner(false);
+    loadingSpinner(false)
+};
